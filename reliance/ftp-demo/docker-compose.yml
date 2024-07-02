@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  ftp:
+    image: stilliard/pure-ftpd
+    environment:
+      - FTP_USER_NAME=user1
+      - FTP_USER_PASS=pass456
+      - FTP_USER_HOME=/home/ballerina
+    ports:
+      - "21:21"
+      - "30000-30009:30000-30009"
