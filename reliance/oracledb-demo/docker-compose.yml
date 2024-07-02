@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  oracle:
+    image: gvenzl/oracle-xe
+    container_name: oracle-xe
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PASSWORD=dummypassword
+    volumes:
+      - ./init.sh:/docker-entrypoint-initdb.d/init.sh
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
