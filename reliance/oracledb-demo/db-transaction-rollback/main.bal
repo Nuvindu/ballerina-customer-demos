@@ -19,13 +19,15 @@ type Book record {|
 
 public function main() returns error? {
     oracledb:Client database = check new (host, user, password, databaseName, port);
-    string bookTitle = "Sapiens";
-    string author = "Yual Noah Harari";
+    string bookTitle = "Crime and Punishment";
+    string author = "Fyodor Dostoevsky";
     int quantity = 1000;
 
     transaction {
-        sql:ParameterizedQuery query = `SELECT book_id FROM books WHERE title = ${bookTitle} and author = ${author}`;
+        sql:ParameterizedQuery query = 
+            `SELECT book_id FROM books WHERE LOWER(title) = LOWER(${bookTitle}) and LOWER(author) = LOWER(${author})`;
         int bookId = check database->queryRow(query);
+
         _ = check database->execute(
             `INSERT INTO orders (order_id, book_id, customer_id, quantity, total_price, order_date) 
                 VALUES (ORDER_SEQ.NEXTVAL, ${bookId}, 123, ${quantity}, 

@@ -19,8 +19,8 @@ type Book record {|
 
 public function main() returns error? {
     mysql:Client database = check new (host, user, password, databaseName, port);
-    string bookTitle = "Sapiens";
-    string author = "Yual Noah Harari";
+    string bookTitle = "Crime and Punishment";
+    string author = "Fyodor Dostoevsky";
     int quantity = 1;
 
     transaction {

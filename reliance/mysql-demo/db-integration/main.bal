@@ -26,7 +26,6 @@ public function main() returns error? {
         price: "8.99",
         quantity: 75
     };
-
     sql:ParameterizedQuery query = 
         `INSERT INTO books (title, author, price, quantity) 
             VALUES (${book.title}, ${book.author}, ${book.price}, ${book.quantity})`;
@@ -35,6 +34,11 @@ public function main() returns error? {
         return error("Error occurred while inserting the record");
     }
 
-    Book result = check database->queryRow(`SELECT * FROM books WHERE title = ${book.title}`);
+    Book result = check database->queryRow(`SELECT * FROM books WHERE title = ${book.title} and author = ${book.author}`);
     io:println("Book: ", result);
+
+    sql:ExecutionResult _ = check database->execute(
+        `UPDATE books SET price = 10.99 WHERE book_id = ${result.book_id}`);
+
+    sql:ExecutionResult _ = check database->execute(`DELETE FROM books WHERE book_id = ${result.book_id}`);
 }

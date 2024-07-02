@@ -19,14 +19,16 @@ type Book record {|
 
 public function main() returns error? {
     oracledb:Client database = check new (host, user, password, databaseName, port);
-    string bookTitle = "Sapiens";
-    string author = "Yual Noah Harari";
+    string bookTitle = "Crime and Punishment";
+    string author = "Fyodor Dostoevsky";
     int quantity = 1;
 
     transaction {
-        sql:ParameterizedQuery query = `SELECT book_id FROM books WHERE title = ${bookTitle} and author = ${author}`;
+        sql:ParameterizedQuery query = 
+            `SELECT book_id FROM books WHERE LOWER(title) = LOWER(${bookTitle}) and LOWER(author) = LOWER(${author})`;
         int bookId = check database->queryRow(query);
-        int availableQuantity = check database->queryRow(`SELECT quantity FROM books WHERE book_id = ${bookId}`);
+        int availableQuantity = check database->queryRow(`SELECT quantity FROM books WHERE LOWER(book_id) = LOWER(${bookId})`);
+
         if availableQuantity < quantity {
             rollback;
             io:println("Book is not available");
