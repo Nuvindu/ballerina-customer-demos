@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  sftp:
+    image: atmoz/sftp:latest
+    hostname: sftp
+    container_name: sftp-test-container
+    ports:
+      - '21213:22'
+    command: in:wso2123:::upload
