@@ -6,18 +6,17 @@
 
 ## Use Case 1: Basic Database Access
 
-This implementation accesses a Oracle database with credentials inserts a new record into a table and then retrieves it.
+This implementation accesses an Oracle database with credentials inserts a new record into a table and then retrieves it.
 
 ![Database Access](./resources/db_access.png)
 
 ## Deploying the system
 
-### 1. Setup a Oracle Database
+### 1. Setup an Oracle Database
 
-Run the following commands to set up the Oracle database server.
+Run the following docker command to set up the Oracle database.
 
 ```sh
-    colima start --memory 4 --arch x86_64   
     docker compose up
 ```
 
@@ -32,9 +31,9 @@ bal run
 
 ## Use Case 2: Database with Atomic Transactions
 
-This implementation accesses a Oracle database with credentials and provides an atomic transaction for completing an order. Here, first, it checks whether the amount of books are available in the inventory for the order to be completed.
+This implementation accesses an Oracle database with credentials and provides an atomic transaction for completing an order. Here, first, it checks whether the amount of books are available in the inventory for the order to be completed.
 
-![Database with Atomic Transactions](./resources/transaction.png)
+![Database with Atomic Transactions](./resources/transaction-1.png)
 
 **Check Book Availability:** Check if the book is in stock by selecting the quantity from the books table. If the book is not available (quantity < 1), the transaction is rolled back, and an error message is printed.
 
@@ -50,7 +49,7 @@ This implementation accesses a Oracle database with credentials and provides an 
 
 ## Deploying the system
 
-### 1. Setup a Oracle Database
+### 1. Setup an Oracle Database
 
 Run the `docker compose` to set up the required dependencies.
 
@@ -70,6 +69,8 @@ bal run
 ## Use Case 3: Database with Transaction Rollbacks
 
 This sample is to demonstrate how the database transactions are rolled back whenever an error is encountered during the process.
+
+![Database with Transaction Rollbacks](./resources/transaction-2.png)
 
 Execute the following command in the project directory.
 
